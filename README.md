@@ -1,11 +1,11 @@
 # Sway named workspaces handler
 
-This script is a full drop-in replacement for workspace switching and naming.
-In vanilla sway renamed workspaces cannot be renamed, rearranged, swapped
-between displays, or navigated between without many `swaymsg rename` commands
+This script is a drop-in replacement for several workspace commands designed to handle spaces with names.
+In vanilla sway renamed workspaces cannot be renamed without many `swaymsg rename` commands
 that are annoying to type in. This script automates these commands and will
 maintain the workspaces' numeric sequence, plus allow dmenu navigation to a
-space when you have many. Does not use i3ipc.
+space when you have many. Does not use i3ipc. Additionally, there are commands to rearrange spaces,
+navigate between them by typing the name, move between workspaces, and to cycle them between inputs.
 
 ## Features
  - Rename and rearrange workspaces without having to think
