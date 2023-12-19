@@ -16,7 +16,7 @@ def base(s): return re.sub(r"\d+:","",s)
 sm = lambda s: run(split("swaymsg "+s))
 
 # New workspace randome names
-namesfile = cwd+'/names/vegetables.txt'
+namesfile = cwd+'vegetables.txt'
 def randname(): return choice(open(namesfile,'r').read().strip().split('\n'))
 
 
