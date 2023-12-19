@@ -4,7 +4,6 @@ from box import Box
 from shlex import split
 from subprocess import Popen, run, PIPE
 from json import loads
-from pprint import PrettyPrinter as pppp; ppp=pppp()
 import re
 from random import choice
 import os
@@ -56,7 +55,6 @@ class SwaySpaces(object):
                 ws['last'] = False
                 
         # Rename everything
-        # Supposed to set it manually in the args
         if reindex:
             for output in self.outputs:
                 for i,ws in enumerate(self.spaces(output)):
@@ -64,17 +62,16 @@ class SwaySpaces(object):
                     sm(f"rename workspace {ws.name} to {fixed_name}")
                     ws.name = fixed_name
 
-
-        # For output cycling, which is not really implemented yet
+        # For output cycling
         self.output_idx = self.outputs.index(self.focused(refresh=False).output)
 
 
     def new(self):
-        # The new name cannot be in the current names so try to fix that.
+        # TODO don't let it use an existing name
         sm("workspace 10000:"+randname())
         self.refresh(reindex=True)
 
-    def focused(self,offset=0,refresh=False): # Offset is poorly named, it gives the workspace to left (negative) or right(positive)
+    def focused(self,offset=0,refresh=False): # Offset returns the workspace to left (negative) or right(positive)
         if refresh: # hack to let it be used in refresh() without recursion
             self.refresh()
 
@@ -174,7 +171,6 @@ class SwaySpaces(object):
                     sm(f"rename workspace {self.focused().name} to {i+1}:{self.focused().basename}; "+
                     f"rename workspace {self.focused(-1).name} to {i+2}:{self.focused(-1).basename}")
 
-                    # These wouldn't be necessary if i could get the dang names right!
                     self.refresh(reindex=True)
 
             case 'right':
