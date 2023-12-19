@@ -17,35 +17,15 @@ space when you have many. Does not use i3ipc.
  - Python scripts can be edited in place
  - Structured git-style command line options via Typer
 
-## Cons / notes / not-tested things / todo
- - Notes / big cons
-    - It sends a long list of `swaymsg rename` commands every time but I have not noticed any speed issues.
-    - Mostly usable in a console, but it simply reruns the init functions every time you do something.
-    - Does not use `i3ipc`, it is completely stateless when run by sway.
-    - My setup is 2 displays and I have not tested with more, but I think it should work
-    - Will not play well with your existing numbered workspaces, works best on a cold boot
- - Small stuff
-    - Needs function for moving current window to other output, current way is to use `container send`
-    - Prevent collisions with new random names
-    - Default workspace at init is not renamed
- - Big stuff
-    - Monolithic `SwaySpaces` object will need to be split up when more output controls are added
-    - Adding config and logging
-    - Select between alternatives to dmenu which I do not use
-    - Consider geometry when moving between displays, currently it just reads in order from `swaymsg -t get_inputs`
- - Things that would be nice
-    - More lists of random workspace names
-    - Remember workspace outputs
-    - Option to keep cursor on current display when switching outputs, may be configurable with cursor warp in sway
-    - `tmux-resurrect` style recovery
-
 ## Python dependencies
  - Boxes.py
  - dmenu-python
  - Typer
 
+## Usage
+Load into your sway config, set python and script paths, and activate the `workspace rename` command on each existing space. Probably will not work with your existing numbered spaces.
 
-## Usage in sway config
+## Sway config example
 
 Example bindings:
 
@@ -79,7 +59,30 @@ bindsym $m+0             exec $py $swayctl workspace number 10
 
 # Recommended
 bar {
-    strip_workspace_numbers yes 
+    strip_workspace_numbers yes
+    ...
     }
 ```
 
+
+## Cons / notes / not-tested things / todo
+ - Notes / big cons
+    - It sends a long list of `swaymsg rename` commands every time but I have not noticed any speed issues.
+    - Mostly usable in a console, but it simply reruns the init functions every time you do something.
+    - Does not use `i3ipc`, it is completely stateless when run by sway.
+    - My setup is 2 displays and I have not tested with more, but I think it should work
+    - Will not play well with workspaces that do not already have a name -- you should rename them first using `workspace rename`.
+ - Small stuff
+    - Needs function for moving current window to other output, current way is to use `container send`
+    - Prevent collisions with new random names
+    - Default workspace at init is not renamed
+ - Big stuff
+    - Monolithic `SwaySpaces` object will need to be split up when more output controls are added
+    - Adding config and logging
+    - Select between alternatives to dmenu which I do not use
+    - Consider geometry when moving between displays, currently it just reads in order from `swaymsg -t get_inputs`
+ - Things that would be nice
+    - More lists of random workspace names
+    - Remember workspace outputs
+    - Option to keep cursor on current display when switching outputs, may be configurable with cursor warp in sway config
+    - `tmux-resurrect` style recovery
